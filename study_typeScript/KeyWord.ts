@@ -6,7 +6,7 @@ class KeyWord {
   }
 
   log() {
-    this.MSG = 'Hi'; //* readOnly
+    // this.MSG = 'Hi'; //* readOnly
     console.log(`MSG: ${this.MSG}`);
   }
 }

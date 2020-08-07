@@ -56,3 +56,4 @@ console.log(fruits.includes('Lemon')); //* true OR false
 fruits.push['Apple'];
 console.log(fruits.indexOf('Apple')); //* 0
 console.log(fruits.lastIndexOf('Apple')); //* 5
+//*

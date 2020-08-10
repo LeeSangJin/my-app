@@ -1,3 +1,8 @@
+//* valiable
+var varData = 'varData'; //! 使用禁止
+let letData = 'letData'; //* 値に変動がある場合のみ
+const constData = 'constData'; //* JavaScriptを使用する際、この形式を使用する。（値の変更が不可）
+
 //* String concatenation
 console.log('my' + 'cat');
 console.log('1' + 2);
@@ -32,6 +37,6 @@ console.log(name === 'Lee' ? 'Yes' : 'No');
 //* do-while
 let i = 3;
 do {
-  console.log(`do while: ${i}`);
-  i--;
+    console.log(`do while: ${i}`);
+    i--;
 } while (i > 0);

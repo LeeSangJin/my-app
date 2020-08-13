@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+}
+body {
+    background-color: rgb(216, 213, 213);
+}
+
+.app {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+.app__dropdown {
+    background-color: white;
+}
+.app__header > h1 {
+    color: red;
+    font-size: 2rem;
+}
+.app__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+.app__right .MuiCardContent-root {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.app__left {
+    /* 90% */
+    flex: 0.9;
+}
+.app__stats {
+    display: flex;
+    justify-content: space-between;
+}
+.app__graph {
+    flex-grow: 1;
+}
+.app__graphTitle {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+@media (max-width: 990px) {
+    .app {
+        /* 화면이 작아지면 컴포넌트를 밑으로 개행시킴 */
+        flex-direction: column;
+    }
+}

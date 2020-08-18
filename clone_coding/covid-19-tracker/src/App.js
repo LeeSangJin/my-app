@@ -34,6 +34,15 @@ function App() {
     //* 만약 화면에 가장 처음에 렌더링 될 땨 한번만 실행하고 싶은경우, 두번째 파라미터로 []를 넣어준다.
     //* "https://disease.sh/v3/covid-19/countries"
     useEffect(() => {
+        fetch('https://disease.sh/v3/covid-19/all')
+            .then((response) => response.json())
+            .then((data) => {
+                setCountryInfo(data);
+            });
+    }, []);
+
+    //* 복수개 선언가능
+    useEffect(() => {
         //* async: send a request, wait for it, do something
         const getCountriesData = async () => {
             await fetch('https://disease.sh/v3/covid-19/countries')
@@ -44,46 +53,49 @@ function App() {
                         value: country.countryInfo.iso2,
                     }));
 
+                    //* sortedData: 정렬된 data[]
                     const sortedData = sortData(data);
                     setTableData(sortedData);
-                    console.log('Data:', data);
+                    console.log('Data: ', data);
+                    //* data[]: [data]
                     setMapCountries(data);
+                    //* countries[]: Object{name, value}
                     setCountries(countries);
+                    console.log('countries: ', countries);
                 });
         };
         getCountriesData();
     }, []);
 
-    //* 복수개 선언가능
-    useEffect(() => {
-        fetch('https://disease.sh/v3/covid-19/all')
-            .then((response) => response.json())
-            .then((data) => {
-                setCountryInfo(data);
-            });
-    }, []);
+    console.log('CasesType: ', casesType);
 
     //* onChange
     const onCountryChange = async (event) => {
         const countryCode = event.target.value;
 
-        // console.log(countryCode);
-        setCountry(countryCode);
+        console.log('countryCode: ', countryCode);
+        // setCountry(countryCode);
 
-        //* https://disease.sh/v3/covid-19/countries/all
+        //* https://disease.sh/v3/covid-19/countries
         //* https://disease.sh/v3/covid-19/countries/{COUNTRY_CODE}
         const url =
             countryCode === 'WorldWide'
-                ? 'https://disease.sh/v3/covid-19/countries/all'
+                ? 'https://disease.sh/v3/covid-19/all'
                 : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
 
         await fetch(url)
             .then((response) => response.json())
             .then((data) => {
+                //* countryCode:
                 setCountry(countryCode);
+                //* data:
                 setCountryInfo(data);
-
-                setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+                console.log('Data: ', data);
+                //* lat, long: 경도, 위도
+                if (countryCode !== 'WorldWide') {
+                    setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+                }
+                //* Zoom: 기본값(4)
                 setMapZoom(4);
             });
     };
@@ -95,15 +107,19 @@ function App() {
             <div className="app__left">
                 <div className="app__header">
                     <h1>Covid-19-Tracker</h1>
-                    <FormControl class="app__dropdown">
+                    <FormControl className="app__dropdown">
                         <Select
                             variant="outlined"
                             value={country}
                             onChange={onCountryChange}
                         >
+                            {/*  DropDown초기표시: WorldWide */}
                             <MenuItem value="WorldWide">WorldWide</MenuItem>
                             {countries.map((country) => (
-                                <MenuItem value={country.value}>
+                                <MenuItem
+                                    value={country.value}
+                                    key={country.name}
+                                >
                                     {country.name}
                                 </MenuItem>
                             ))}
@@ -136,6 +152,7 @@ function App() {
                         total={prettyPrintStat(countryInfo.deaths)}
                     />
                 </div>
+                {/*  Map표시 */}
                 <Map
                     casesType={casesType}
                     countries={mapCountries}
@@ -144,21 +161,21 @@ function App() {
                 />
             </div>
 
-            <div className="app__right">
-                <Card>
-                    <CardContent>
+            <Card className="app__right">
+                <CardContent>
+                    <div className="app__information">
                         <h3>Live Cases by Country</h3>
                         <Table countries={tableData} />
                         <h3 className="app__graphTitle">
-                            WorldWide new {casesType}{' '}
+                            WorldWide new {casesType}
                         </h3>
                         <LineGraph
                             className="app__graph"
                             casesType={casesType}
                         />
-                    </CardContent>
-                </Card>
-            </div>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }

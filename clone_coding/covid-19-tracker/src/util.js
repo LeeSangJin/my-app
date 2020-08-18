@@ -2,6 +2,7 @@ import React from 'react';
 import numeral from 'numeral';
 import { Circle, Popup } from 'react-leaflet';
 
+//* Circle디자인
 const casesTypeColors = {
     cases: {
         hex: '#CC1034',
@@ -23,9 +24,9 @@ const casesTypeColors = {
     },
 };
 
+//* 정렬
 export const sortData = (data) => {
     const sortedData = [...data];
-    //* 정렬
     return sortedData.sort((a, b) => b.cases - a.cases);
 };
 
@@ -33,6 +34,7 @@ export const sortData = (data) => {
 export const showDataOnMap = (data, casesType = 'cases') =>
     data.map((country) => (
         <Circle
+            key={country.country}
             center={[country.countryInfo.lat, country.countryInfo.long]}
             fillOpacity={0.4}
             color={casesTypeColors[casesType].hex}
@@ -65,5 +67,6 @@ export const showDataOnMap = (data, casesType = 'cases') =>
         </Circle>
     ));
 
+//* 표시형식: 0.0a OR +0
 export const prettyPrintStat = (stat) =>
     stat ? `+${numeral(stat).format('0.0a')}` : '+0';

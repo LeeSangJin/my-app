@@ -11,7 +11,7 @@ function InfoBox({ title, cases, active, isRed, total, ...props }) {
             }`}
         >
             <CardContent>
-                <Typography className="infoBox__title" color="textsecondary">
+                <Typography className="infoBox__title" color="textSecondary">
                     {title}
                 </Typography>
                 {/* cases */}
@@ -23,7 +23,7 @@ function InfoBox({ title, cases, active, isRed, total, ...props }) {
                     {cases}
                 </h2>
 
-                <Typography className="infoBox__total" color="textsecondary">
+                <Typography className="infoBox__total" color="textSecondary">
                     {total} Total
                 </Typography>
             </CardContent>

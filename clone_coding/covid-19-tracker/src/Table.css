@@ -2,7 +2,8 @@
     margin-top: 20px;
     overflow: scroll;
     height: 400px;
-    color: black;
+    color: #6a5d5d;
+    background-color: white;
 }
 .table tr {
     display: flex;
@@ -11,9 +12,10 @@
 
 .table td {
     padding: 0.5rem;
+    border: none;
 }
 
 /* 홀수행 */
 .table tr:nth-of-type(odd) {
-    background-color: rgb(219, 219, 219);
+    background-color: #f3f2f8;
 }
